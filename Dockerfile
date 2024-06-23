@@ -9,8 +9,8 @@ COPY package.json ./
 RUN npm install
 
 # Copy the rest of the application
-COPY . .
-
+#COPY . .
+COPY / /var/www/angular-app
 # Build the Angular application
 RUN npm run build --prod
 
