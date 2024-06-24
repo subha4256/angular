@@ -24,5 +24,5 @@ RUN cp -r /angular-app/dist/angular-hello-world/* /var/www/html/
 EXPOSE 80
 
 # Start Apache in the foreground
-CMD ["apachectl", "-D", "FOREGROUND"]
+#CMD ["apachectl", "-D", "FOREGROUND"]
 
