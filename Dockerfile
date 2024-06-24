@@ -1,7 +1,7 @@
-# Stage 1: Build the Angular app
-FROM azuresubha/angular:latest
+# Use your custom image as the base image
+FROM your-custom-image
 
-# Set the working directory
+# Set the working directory for the Angular build
 WORKDIR /angular-app
 
 # Copy package.json and package-lock.json
@@ -16,20 +16,11 @@ COPY . .
 # Build the Angular app
 RUN npm run build --prod
 
-# Stage 2: Set up the Apache server
-FROM azuresubha:angular:latest
-
-# Install Apache
-#RUN apt-get update && apt-get install -y apache2
-
-# Ensure the Apache service directory exists
-RUN mkdir -p /run/apache2
-
-# Remove the default Apache HTML content
+# Remove existing content in the Apache web directory
 RUN rm -rf /var/www/html/*
 
 # Copy the Angular build output to the Apache web directory
-COPY --from=build /app/dist/angular-app /var/www/html
+RUN cp -r /app/dist/angular-app/* /var/www/html/
 
 # Expose port 80
 EXPOSE 80
