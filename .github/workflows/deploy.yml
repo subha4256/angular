@@ -34,9 +34,9 @@ jobs:
         username: ${{ secrets.EC2_USER }}
         key: ${{ secrets.EC2_KEY }}
         script: |
+          docker pull azuresubha/angular:latest
           docker stop angular-webserver || true
           docker rm angular-webserver || true
-          docker container prune -f || true
-          docker pull azuresubha/angular:latest
+          docker container prune -f
           docker run -d -it -p 80:80 --name angular-webserver azuresubha/angular:latest
 
