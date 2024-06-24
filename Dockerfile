@@ -1,5 +1,5 @@
 # Use your custom image as the base image
-FROM azuresubha/angular:v1
+FROM azuresubha/angular:latest
 
 # Set the working directory for the Angular build
 WORKDIR /angular-app
