@@ -38,5 +38,5 @@ jobs:
           docker rm angular-webserver || true
           docker container prune -f || true
           docker pull azuresubha/angular:latest
-          docker run -d -p 80:80 --name angular-webserver azuresubha/angular:latest
+          docker run -d -it -p 80:80 --name angular-webserver azuresubha/angular:latest
 
