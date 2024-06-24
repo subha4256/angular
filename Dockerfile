@@ -20,7 +20,7 @@ RUN npm run build --prod
 RUN rm -rf /var/www/html/*
 
 # Copy the Angular build output to the Apache web directory
-RUN cp -r /angular-app/dist/Angular-HelloWorld/* /var/www/html/
+RUN cp -r /angular-app/dist/Angular-Hello-World/* /var/www/html/
 
 # Expose port 80
 EXPOSE 80
