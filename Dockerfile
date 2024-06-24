@@ -1,52 +1,39 @@
-# Use your custom base image
-FROM azuresubha/angular:latest
+# Stage 1: Build the Angular app
+FROM node:14 AS build
 
-# Set working directory
-#WORKDIR /var/www/angular-app
+# Set the working directory
+WORKDIR /app
 
-# Copy package.json and install dependencies
-#COPY package.json ./
-#RUN npm install
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# Copy the rest of the application
-#COPY . .
-#COPY / /var/www/angular-app
-# Build the Angular application
-#RUN npm run build --prod
-
-
-
-# copy file from build folder
-#COPY /var/www/angular-app/dist/angular-app/ /var/www/html/ 
-#COPY /var/www/angular-app/dist/angular-app/.[!.]* /var/www/html/ 
-# Expose port 80 
-
-#EXPOSE 80 
-
-# No need to define CMD since httpd image already defines # 
-
-#CMD ["httpd-foreground"] to start Apache in foreground
-
-# Use your custom base image
-#FROM your-custom-base-image
-
-# Set working directory
-WORKDIR /angular-app
-
-# Copy package.json and install dependencies
-COPY package.json ./
+# Install dependencies
 RUN npm install
 
-# Copy the rest of the application
+# Copy the rest of the application files
 COPY . .
 
-# Build the Angular application
+# Build the Angular app
 RUN npm run build --prod
-COPY --from=build /angular-app/dist/angular-app /var/www/html
+
+# Stage 2: Set up the Apache server
+FROM debian:latest
+
+# Install Apache
+RUN apt-get update && apt-get install -y apache2
+
+# Ensure the Apache service directory exists
+RUN mkdir -p /run/apache2
+
+# Remove the default Apache HTML content
+RUN rm -rf /var/www/html/*
+
+# Copy the Angular build output to the Apache web directory
+COPY --from=build /app/dist/your-angular-app /var/www/html
+
 # Expose port 80
 EXPOSE 80
 
-# Start the application
-#CMD ["npx", "http-server", "dist/angular-app", "-p", "80"]
 # Start Apache in the foreground
 CMD ["apachectl", "-D", "FOREGROUND"]
+
