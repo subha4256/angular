@@ -42,10 +42,11 @@ COPY . .
 
 # Build the Angular application
 RUN npm run build --prod
-
+COPY --from=build /angular-app/dist/angular-app /var/www/html
 # Expose port 80
 EXPOSE 80
 
 # Start the application
-CMD ["npx", "http-server", "dist/angular-app", "-p", "80"]
-
+#CMD ["npx", "http-server", "dist/angular-app", "-p", "80"]
+# Start Apache in the foreground
+CMD ["apachectl", "-D", "FOREGROUND"]
