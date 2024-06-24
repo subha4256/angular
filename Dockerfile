@@ -16,11 +16,9 @@ COPY . .
 # Build the Angular app
 RUN npm run build --prod
 
-# Remove existing content in the Apache web directory
-RUN rm -rf /var/www/html/*
-
+# Remove existing content in the Apache web direc
 # Copy the Angular build output to the Apache web directory
-RUN cp -r /angular-app/dist/Angular-Hello-World/* /var/www/html/
+RUN cp -r /angular-app/dist/angular-hello-world/* /var/www/html/
 
 # Expose port 80
 EXPOSE 80
