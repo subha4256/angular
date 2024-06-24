@@ -1,5 +1,5 @@
 # Use your custom base image
-FROM azuresubha/angular:v1
+FROM azuresubha/angular:latest
 
 # Set working directory
 #WORKDIR /var/www/angular-app
